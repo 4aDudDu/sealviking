@@ -10,7 +10,12 @@ if ($conn->connect_error) {
     die('Connection failed: ' . $conn->connect_error);
 }
 
-$password_hashed = password_hash('botakkontol', PASSWORD_BCRYPT);
+// Pakai MD5 (Format standar Seal Online)
+$password_hashed = md5('botakkontol');
+
+// Jika ternyata gamenya pakai Plaintext (Teks biasa tanpa enkripsi), aktifkan kode di bawah ini dan hapus kode MD5 di atas:
+// $password_hashed = 'botakkontol';
+
 $sql = "INSERT INTO users (name, email, password, created_at, updated_at) VALUES ('gm01', 'gm01@sealonline.test', '$password_hashed', NOW(), NOW())";
 
 if ($conn->query($sql) === TRUE) {
