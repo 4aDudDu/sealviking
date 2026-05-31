@@ -1,0 +1,122 @@
+/* 
+ * Seal Viking Theme for Filament Admin Dashboard
+ * Deep Dark Blues, Rich Medieval Gold, and Premium Glassmorphism
+ */
+
+/* Main Background and Core Layout */
+body, 
+.fi-layout, 
+.fi-main, 
+.fi-app-body {
+    background-color: #060c18 !important;
+    background-image: radial-gradient(circle at top right, rgba(30, 58, 104, 0.25) 0%, transparent 60%) !important;
+    color: #e2e8f0 !important;
+}
+
+/* Sidebar Styling */
+.fi-sidebar {
+    background-color: #0b192c !important;
+    border-right: 1px solid #1e3a68 !important;
+    box-shadow: 5px 0 25px rgba(6, 12, 24, 0.6) !important;
+}
+.fi-sidebar-item-active {
+    background-color: rgba(212, 175, 55, 0.08) !important;
+    border-left: 3px solid #D4AF37 !important;
+}
+.fi-sidebar-item-active a, 
+.fi-sidebar-item-active svg {
+    color: #D4AF37 !important;
+}
+
+/* Header Navbar Styling */
+.fi-topbar {
+    background-color: #0b192c !important;
+    border-bottom: 1px solid #1e3a68 !important;
+}
+
+/* Section Cards & Widgets */
+.fi-section, 
+.fi-card, 
+.fi-widget,
+.fi-ta-content,
+.fi-modal-window {
+    background-color: #152744 !important;
+    border: 1px solid #1e3a68 !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 10px 25px rgba(6, 12, 24, 0.4) !important;
+}
+
+/* Modal Headers */
+.fi-modal-header {
+    border-bottom: 1px solid #1e3a68 !important;
+}
+
+/* Tables Styling */
+.fi-ta-header {
+    background-color: #0b192c !important;
+    border-bottom: 1px solid #1e3a68 !important;
+}
+.fi-ta-row:hover {
+    background-color: rgba(30, 58, 104, 0.3) !important;
+}
+.fi-ta-cell {
+    border-bottom: 1px solid rgba(30, 58, 104, 0.3) !important;
+}
+
+/* Inputs and Forms Control elements */
+.fi-fo-component input,
+.fi-fo-component textarea,
+.fi-fo-component select,
+.fi-input-wrp {
+    background-color: #0b192c !important;
+    border-color: #1e3a68 !important;
+    color: #f8fafc !important;
+}
+.fi-fo-component input:focus,
+.fi-fo-component textarea:focus,
+.fi-fo-component select:focus,
+.fi-input-wrp:focus-within {
+    border-color: #D4AF37 !important;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2) !important;
+}
+
+/* Secondary Info cards & badges */
+.fi-badge {
+    background-color: rgba(212, 175, 55, 0.1) !important;
+    border: 1px solid rgba(212, 175, 55, 0.2) !important;
+    color: #e5c158 !important;
+}
+
+/* Filament Buttons custom primary mapping */
+.fi-btn-color-primary {
+    background-color: #D4AF37 !important;
+    color: #0b192c !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    transition: all 0.3s ease !important;
+}
+.fi-btn-color-primary:hover {
+    background-color: #e5c158 !important;
+    box-shadow: 0 0 15px rgba(229, 193, 88, 0.4) !important;
+}
+
+/* Custom Login Page styling */
+.fi-simple-page {
+    background-color: #060c18 !important;
+    background-image: radial-gradient(circle at center, rgba(30, 58, 104, 0.4) 0%, transparent 70%) !important;
+}
+.fi-simple-main-card {
+    background-color: #152744 !important;
+    border: 2px solid #1e3a68 !important;
+    border-radius: 1.5rem !important;
+    box-shadow: 0 15px 45px rgba(6, 12, 24, 0.8) !important;
+    padding: 2.5rem !important;
+}
+.fi-simple-header-title {
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    font-style: italic !important;
+    letter-spacing: 0.1em !important;
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.5) !important;
+}
