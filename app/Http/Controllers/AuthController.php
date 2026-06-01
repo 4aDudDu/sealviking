@@ -63,10 +63,13 @@ class AuthController extends Controller
             ])->withInput($request->only('game_id'));
         }
 
-        // Verifikasi password (MD5 — standar Seal Online)
+        // Verifikasi password (OLD_PASSWORD — standar Seal Online)
         if (!$gameAccount->verifyPassword($password)) {
+            // DEBUG SEMENTARA — hapus setelah berhasil!
+            $storedHash = strtolower(trim($gameAccount->passed));
+            $computedHash = strtolower(\App\Models\Seal\SealAccount::mysqlOldPassword($password));
             return back()->withErrors([
-                'game_id' => 'ID atau password salah.',
+                'game_id' => "ID atau password salah. [DEBUG] stored=$storedHash | computed=$computedHash | input=$password",
             ])->withInput($request->only('game_id'));
         }
 
