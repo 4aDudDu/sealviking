@@ -3,6 +3,7 @@
 namespace App\Models\Seal;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Model untuk tabel idtable1 di database seal_member
@@ -28,13 +29,20 @@ class SealAccount extends Model
     protected $hidden = ['passed'];
 
     /**
-     * Verify password (MD5 hash — sesuai Seal Online standar)
+     * Verify password menggunakan MySQL OLD_PASSWORD()
+     * Game Seal Online menyimpan password dalam format OLD_PASSWORD (16 char hex)
+     * Contoh: password "bontot123" → "539efffa33704599"
      */
     public function verifyPassword(string $inputPassword): bool
     {
-        return $this->passed === md5($inputPassword)
-            || $this->passed === strtolower(md5($inputPassword))
-            || $this->passed === $inputPassword; // fallback plain (jangan pakai di produksi)
+        // Hitung hash menggunakan fungsi OLD_PASSWORD() dari MySQL
+        $result = DB::connection('seal_member')
+            ->selectOne("SELECT OLD_PASSWORD(?) as hashed", [$inputPassword]);
+
+        $oldPasswordHash = $result->hashed ?? '';
+
+        // Bandingkan hash OLD_PASSWORD dengan yang tersimpan di database
+        return strtolower($this->passed) === strtolower($oldPasswordHash);
     }
 
     /**
