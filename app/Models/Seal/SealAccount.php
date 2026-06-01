@@ -29,20 +29,54 @@ class SealAccount extends Model
     protected $hidden = ['passed'];
 
     /**
-     * Verify password menggunakan MySQL OLD_PASSWORD()
+     * Verify password menggunakan algoritma MySQL OLD_PASSWORD()
      * Game Seal Online menyimpan password dalam format OLD_PASSWORD (16 char hex)
      * Contoh: password "bontot123" → "539efffa33704599"
      */
     public function verifyPassword(string $inputPassword): bool
     {
-        // Hitung hash menggunakan fungsi OLD_PASSWORD() dari MySQL
-        $result = DB::connection('seal_member')
-            ->selectOne("SELECT OLD_PASSWORD(?) as hashed", [$inputPassword]);
+        $storedHash = strtolower(trim($this->passed));
+        $computedHash = strtolower(self::mysqlOldPassword($inputPassword));
 
-        $oldPasswordHash = $result->hashed ?? '';
+        // Bandingkan hash
+        if ($storedHash === $computedHash) {
+            return true;
+        }
 
-        // Bandingkan hash OLD_PASSWORD dengan yang tersimpan di database
-        return strtolower($this->passed) === strtolower($oldPasswordHash);
+        // Fallback: coba bandingkan langsung (plain text)
+        if ($this->passed === $inputPassword) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Implementasi algoritma MySQL OLD_PASSWORD() di PHP
+     * Fungsi OLD_PASSWORD() sudah dihapus di MySQL 8.0+,
+     * jadi kita hitung sendiri di PHP agar kompatibel semua versi.
+     */
+    public static function mysqlOldPassword(string $password): string
+    {
+        $nr  = 1345345333;
+        $add = 7;
+        $nr2 = 0x12345671;
+
+        $len = strlen($password);
+        for ($i = 0; $i < $len; $i++) {
+            $c = ord($password[$i]);
+            if ($c === 32 || $c === 9) {
+                continue; // Skip spasi dan tab
+            }
+
+            $nr  ^= ((($nr & 63) + $add) * $c) + ($nr << 8);
+            $nr  &= 0x7FFFFFFF;
+            $nr2 += ($nr2 << 8) ^ $nr;
+            $nr2 &= 0x7FFFFFFF;
+            $add += $c;
+        }
+
+        return sprintf('%08x%08x', $nr, $nr2);
     }
 
     /**
